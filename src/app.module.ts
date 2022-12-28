@@ -8,8 +8,13 @@ import { UserSchema } from './models/user.schema';
 import { BusinessController } from './controller/business/business.controller';
 import { BusinessService } from './services/Business/business.service';
 import { BusinessSchema } from './models/business.schema';
+// import { AuthService } from './services/auth/auth.service';
+import { ConfigModule } from '@nestjs/config';
+// import { JwtStrategy } from './services/auth/jwt.strategy';
+
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     MongooseModule.forRoot(
       'mongodb+srv://root:swb1234@cluster0.p8vw5.mongodb.net/yfobs',
       {
@@ -21,6 +26,12 @@ import { BusinessSchema } from './models/business.schema';
     MongooseModule.forFeature([{ name: 'Business', schema: BusinessSchema }]),
   ],
   controllers: [AppController, UserController, BusinessController],
-  providers: [AppService, UserService, BusinessService],
+  providers: [
+    AppService,
+    UserService,
+    BusinessService,
+    // AuthService,
+    // JwtStrategy,
+  ],
 })
 export class AppModule {}

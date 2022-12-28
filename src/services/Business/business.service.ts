@@ -26,6 +26,10 @@ export class BusinessService {
     @Body() businessDto: businessDto,
   ): Promise<Business> {
     const business = await this.businessModel.create(businessDto);
-    return CommonMethods.success(res, 'success', business);
+    if (business) {
+      return CommonMethods.success(res, 'success', 200, business);
+    } else {
+      return CommonMethods.error(res, 'Business Not Created', 400);
+    }
   }
 }
