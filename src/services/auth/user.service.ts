@@ -16,6 +16,7 @@ import * as bcrypt from 'bcryptjs';
 import { Payload } from 'src/interface/payload.interface';
 // const jwt = require('jsonwebtoken');
 import * as jwt from 'jsonwebtoken';
+import { ChangePasswordDto } from 'src/dto/auth/changePassword.dto';
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,9 @@ export class UserService {
     @InjectModel('User')
     private userModel: Model<User>,
   ) {}
+  async hashPassword(password: string): Promise<string> {
+    return await bcrypt.hash(password, 10);
+  }
 
   //User Registration
   async createuser(res: Response, userDto: UserDto): Promise<User> {
@@ -162,4 +166,34 @@ export class UserService {
       return CommonMethods.error(res, 'No User Exists', 401);
     }
   }
+  //Change Password
+  async changePassword(
+    @Res() res,
+    userID,
+    changePasswordDto: ChangePasswordDto,
+  ) {
+    const password = changePasswordDto.oldPassword;
+    const password1 = await this.hashPassword(changePasswordDto.newPassword);
+    const user = await this.userModel.findById(userID);
+
+    if (!user) {
+      return CommonMethods.error(res, 'User does not exists', 401);
+    } else {
+      if (await bcrypt.compare(password, user.password)) {
+        const changePassword = await this.userModel.findByIdAndUpdate(userID, {
+          password: password1,
+        });
+        return CommonMethods.success(
+          res,
+          'Password Changed successfully',
+          changePassword,
+          200,
+        );
+      } else {
+        return CommonMethods.error(res, 'Incorrect old password', 400);
+      }
+    }
+  }
+
+  //forgot password
 }

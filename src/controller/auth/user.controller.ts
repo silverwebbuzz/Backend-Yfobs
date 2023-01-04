@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  Put,
 } from '@nestjs/common';
 import { CommonMethods } from 'src/common/commonMethods';
 import { LoginDto } from 'src/dto/auth/login.dto';
@@ -14,6 +15,7 @@ import { UserDto } from 'src/dto/auth/user.dto';
 import { UserService } from 'src/services/auth/user.service';
 // import { AuthService } from 'src/services/auth/auth.service';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
+import { ChangePasswordDto } from 'src/dto/auth/changePassword.dto';
 
 @Controller()
 export class UserController {
@@ -39,11 +41,6 @@ export class UserController {
   @Post('/userLogin')
   public async checkuser(@Res() res, @Body() loginDto: LoginDto) {
     return await this.userService.findByLogin(res, loginDto);
-    // const payload = {
-    //   email: user.email,
-    // };
-    // const token = await this.authService.signPayload(payload);
-    // return CommonMethods.auth(res, 'Login successful', user, token);
   }
 
   @Get('/getSingleUser/:userID')
@@ -63,5 +60,18 @@ export class UserController {
   @Delete('/deleteUser/:userID')
   async deleteUser(@Res() res, @Param('userID') userID) {
     await this.userService.deleteUser(res, userID);
+  }
+
+  @Put('/changePassword/:userID')
+  public async changePassword(
+    @Res() res,
+    @Param('userID') userID,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ) {
+    return await this.userService.changePassword(
+      res,
+      userID,
+      changePasswordDto,
+    );
   }
 }

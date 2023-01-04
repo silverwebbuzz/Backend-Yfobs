@@ -8,5 +8,6 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   app.enableCors();
   await app.listen(8001);
+  // await app.listen(80);
 }
 bootstrap();
