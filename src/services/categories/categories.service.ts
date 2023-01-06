@@ -40,7 +40,6 @@ export class CategoriesService {
       .sort({ created_at: -1 })
       .exec();
     if (getAllCategory) {
-      ``;
       return CommonMethods.success(
         res,
         'Categories List fetched successfully',

@@ -22,7 +22,7 @@ export class User {
   password: string;
 
   @Prop()
-  otp: string;
+  otp: number;
 
   @Prop()
   user_type: string;
@@ -50,9 +50,6 @@ export class User {
 
   @Prop({ default: now() })
   createdAt: Date;
-
-  @Prop({ default: now() })
-  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

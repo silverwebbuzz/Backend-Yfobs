@@ -11,6 +11,7 @@ import { Model } from 'mongoose';
 import { Customer } from 'src/models/customer.schema';
 import { CustomerDto } from 'src/dto/customer/customer.dto';
 import { CommonMethods } from 'src/common/commonMethods';
+import { Business } from 'src/models/business.schema';
 const base64ToImage = require('base64-to-image');
 const csvtojson = require('csvtojson');
 
@@ -19,6 +20,8 @@ export class customerService {
   constructor(
     @InjectModel('customer')
     private customerModel: Model<Customer>,
+    @InjectModel('Business')
+    private BusinessModel: Model<Business>,
   ) {}
 
   //createCustomer api
@@ -188,6 +191,7 @@ export class customerService {
                   country: data[i]['Country'],
                   state: data[i]['State'],
                   userId: body.userId,
+                  businessId: body.businessId,
                 });
 
                 newcustomer.save();

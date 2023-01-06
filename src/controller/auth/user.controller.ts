@@ -16,6 +16,7 @@ import { UserService } from 'src/services/auth/user.service';
 // import { AuthService } from 'src/services/auth/auth.service';
 import { AuthGuard } from '@nestjs/passport/dist/auth.guard';
 import { ChangePasswordDto } from 'src/dto/auth/changePassword.dto';
+import { ForgotPasswordDto } from 'src/dto/auth/forgotPassword.dto';
 
 @Controller()
 export class UserController {
@@ -73,5 +74,12 @@ export class UserController {
       userID,
       changePasswordDto,
     );
+  }
+  @Post('/forgotPassword')
+  public async forgotPassword(
+    @Res() res,
+    @Body() forgotPasswordDto: ForgotPasswordDto,
+  ) {
+    return await this.userService.forgotPassword(res, forgotPasswordDto);
   }
 }

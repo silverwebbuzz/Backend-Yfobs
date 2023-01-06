@@ -15,9 +15,13 @@ import { customerService } from './services/customer/customer.service';
 import { CategoriesService } from './services/categories/categories.service';
 import { CategoriesSchema } from './models/categories.schema';
 import { CategoryController } from './controller/categories/categories.controller';
+import { ProductController } from './controller/product/product.controller';
+import { ProductService } from './services/product/product.service';
+import { productSchema } from './models/product.schema';
 // import { AuthService } from './services/auth/auth.service';
 import { ConfigModule } from '@nestjs/config';
 // import { JwtStrategy } from './services/auth/jwt.strategy';
+import { SendGridService } from './services/sendGridService/sendGrid.service';
 
 @Module({
   imports: [
@@ -38,6 +42,7 @@ import { ConfigModule } from '@nestjs/config';
     MongooseModule.forFeature([
       { name: 'Categories', schema: CategoriesSchema },
     ]),
+    MongooseModule.forFeature([{ name: 'Product', schema: productSchema }]),
   ],
   controllers: [
     AppController,
@@ -45,6 +50,7 @@ import { ConfigModule } from '@nestjs/config';
     BusinessController,
     customerController,
     CategoryController,
+    ProductController,
   ],
   providers: [
     AppService,
@@ -52,6 +58,8 @@ import { ConfigModule } from '@nestjs/config';
     BusinessService,
     customerService,
     CategoriesService,
+    ProductService,
+    SendGridService,
 
     // AuthService,
     // JwtStrategy,

@@ -1,5 +1,5 @@
 export class ChangePasswordDto {
   userID: string;
-  oldPassword: string;
+  password: string;
   newPassword: string;
 }
