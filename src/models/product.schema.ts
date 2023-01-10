@@ -25,15 +25,15 @@ export class Product {
   @Prop()
   details?: string;
 
-  @Prop()
+  @Prop({ default: 0 })
   isSell?: string;
-  @Prop()
+  @Prop({ default: 0 })
   isBuy?: string;
 
-  @Prop()
+  @Prop({ default: 0 })
   incomeCategory?: string;
 
-  @Prop()
+  @Prop({ default: 0 })
   expenseCategory?: string;
 
   @Prop({ default: now() })

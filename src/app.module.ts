@@ -18,6 +18,11 @@ import { CategoryController } from './controller/categories/categories.controlle
 import { ProductController } from './controller/product/product.controller';
 import { ProductService } from './services/product/product.service';
 import { productSchema } from './models/product.schema';
+import { EstimatesController } from './controller/estimates/estimates.controller';
+import { EstimatesService } from './services/estimates/estimates.service';
+import { InvoiceSchema } from './models/invoice.schema';
+import { InvoiceController } from './controller/invoice/invoice.controller';
+import { InvoiceService } from './services/invoice/invoice.service';
 // import { AuthService } from './services/auth/auth.service';
 import { ConfigModule } from '@nestjs/config';
 // import { JwtStrategy } from './services/auth/jwt.strategy';
@@ -43,6 +48,8 @@ import { SendGridService } from './services/sendGridService/sendGrid.service';
       { name: 'Categories', schema: CategoriesSchema },
     ]),
     MongooseModule.forFeature([{ name: 'Product', schema: productSchema }]),
+    MongooseModule.forFeature([{ name: 'Estimates', schema: InvoiceSchema }]),
+    MongooseModule.forFeature([{ name: 'Invoice', schema: InvoiceSchema }]),
   ],
   controllers: [
     AppController,
@@ -51,6 +58,8 @@ import { SendGridService } from './services/sendGridService/sendGrid.service';
     customerController,
     CategoryController,
     ProductController,
+    EstimatesController,
+    InvoiceController,
   ],
   providers: [
     AppService,
@@ -60,6 +69,8 @@ import { SendGridService } from './services/sendGridService/sendGrid.service';
     CategoriesService,
     ProductService,
     SendGridService,
+    EstimatesService,
+    InvoiceService,
 
     // AuthService,
     // JwtStrategy,

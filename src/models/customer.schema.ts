@@ -9,11 +9,10 @@ export class Customer {
 
   @Prop()
   businessId?: string;
-
   @Prop()
   name?: string;
 
-  @Prop()
+  @Prop({ unique: true })
   email?: string;
 
   @Prop()

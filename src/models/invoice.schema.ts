@@ -3,7 +3,7 @@ import { Document, now } from 'mongoose';
 import { Type } from 'src/enum/invoice.enum';
 export type UserDocument = Invoice & Document;
 
-@Schema({ timestamps: false, collection: 'Invoice' })
+@Schema({ timestamps: true, collection: 'Invoice' })
 export class Invoice {
   @Prop()
   userId?: string;
@@ -14,27 +14,27 @@ export class Invoice {
   @Prop()
   title?: string;
 
-  @Prop({ default: Type.INVOICE })
+  @Prop({ default: Type.ESTIMATES })
   type?: string;
 
   @Prop({ default: 0 })
   recurring?: string;
 
   @Prop()
-  parent_id?: string;
+  parentId?: string;
 
   @Prop()
   summary?: string;
 
   @Prop()
-  number?: string;
+  estimatesNumber?: string;
   @Prop()
   posoNumber?: string;
 
   @Prop()
   challanNo?: string;
 
-  @Prop()
+  @Prop({ default: 0 })
   isBankdetails?: string;
 
   @Prop()
@@ -70,7 +70,7 @@ export class Invoice {
   @Prop()
   convertTotal?: string;
 
-  @Prop({ default: 0 })
+  @Prop({ default: 1 })
   status?: string;
 
   @Prop()

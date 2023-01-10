@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param, Res } from '@nestjs/common';
+import { Body, Controller, Post, Put, Get, Param, Res } from '@nestjs/common';
 import { BusinessService } from 'src/services/Business/business.service';
 import { businessDto } from 'src/dto/business/business.dto';
 @Controller('business')
@@ -39,5 +39,14 @@ export class BusinessController {
   @Get('uploads/QRcode/:filename')
   getFaviconImage(@Param('filename') filename, @Res() res) {
     return res.sendFile(filename, { root: 'uploads/QRcode' });
+  }
+
+  @Put('/updateBusiness/:businessId')
+  async updatePackageFeatures(
+    @Res() res,
+    @Param('businessId') businessId,
+    @Body() businessDto: businessDto,
+  ) {
+    await this.BusinessService.updateBusiness(res, businessId, businessDto);
   }
 }

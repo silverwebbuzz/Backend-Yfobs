@@ -88,14 +88,13 @@ export class BusinessService {
   }
 
   public async business(
-    @Res() res,
-    @Body() businessDto: businessDto,
+    res: Response,
+    businessDto: businessDto,
   ): Promise<Business> {
     const val = Math.floor(100000 + Math.random() * 900000);
     const business = await new this.businessModel(businessDto)
       .$set({ randomBusinessnumber: val })
       .save();
-
     if (business) {
       return CommonMethods.success(res, 'success', 200, business);
     } else {
@@ -121,12 +120,40 @@ export class BusinessService {
     }
   }
   // Get a single Category api
-  async getCategoryById(res: Response, categoryID): Promise<BusinessCategory> {
+  async getCategoryById(
+    res: Response,
+    categoryID: string,
+  ): Promise<BusinessCategory> {
     const user = await this.businessCategoryModel.findById(categoryID).exec();
     if (user) {
       return CommonMethods.success(res, 'Success', 200, user);
     } else {
       return CommonMethods.error(res, 400, 'Category does not exists');
+    }
+  }
+
+  //updateBusiness api
+  async updateBusiness(
+    res: Response,
+    businessId: string,
+    businessDto: businessDto,
+  ): Promise<BusinessCategory> {
+    const editBusiness = await this.businessModel.findByIdAndUpdate(
+      businessId,
+      businessDto,
+      { new: true },
+    );
+    console.log(editBusiness, 'rr');
+
+    if (editBusiness) {
+      return CommonMethods.success(
+        res,
+        'Business Edited Successfully',
+        200,
+        editBusiness,
+      );
+    } else {
+      return CommonMethods.error(res, 400, 'No Business Present');
     }
   }
 }

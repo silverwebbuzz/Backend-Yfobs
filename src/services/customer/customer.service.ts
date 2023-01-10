@@ -29,12 +29,20 @@ export class customerService {
     @Res() res,
     @Body() CustomerDto: CustomerDto,
   ): Promise<Customer> {
-    const newUser = new this.customerModel(CustomerDto);
-    if (newUser) {
-      await newUser.save();
-      return CommonMethods.success(res, 'Customer Created', 200, newUser);
+    const { email } = CustomerDto;
+    const checkEmail = await this.customerModel.findOne({ email: email });
+    console.log(checkEmail);
+
+    if (!checkEmail) {
+      const newUser = new this.customerModel(CustomerDto);
+      if (newUser) {
+        await newUser.save();
+        return CommonMethods.success(res, 'Customer Created', 200, newUser);
+      } else {
+        return CommonMethods.error(res, 400, 'Oops! Not Created');
+      }
     } else {
-      return CommonMethods.error(res, 400, 'Already Exists');
+      return CommonMethods.error(res, 300, 'Email Already Exists');
     }
   }
 
@@ -115,7 +123,6 @@ export class customerService {
       const imageInfo = base64ToImage(base64Str, path, optionalObj);
       const parsedData = [];
       const errorArry = [];
-
       await csvtojson()
         .fromFile(`uploads/customercsv/${imageInfo.fileName}`)
         .then((data) => {

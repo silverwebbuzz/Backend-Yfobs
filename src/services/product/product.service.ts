@@ -29,11 +29,8 @@ export class ProductService {
     @Body() productDto: productDto,
   ): Promise<Product> {
     const newProduct = new this.ProductModel(productDto);
-    // const userid = newProduct.userId;
-    // const business = await this.BusinessModel.findOne({ userId: userid });
-    // const businessNumber = business.randomBusinessnumber;
+
     if (newProduct) {
-      // $set({ businessId: businessNumber })
       await newProduct.save();
       return CommonMethods.success(res, 'New Product Created', 200, newProduct);
     } else {

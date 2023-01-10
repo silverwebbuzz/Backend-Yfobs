@@ -12,7 +12,7 @@ export class businessDto {
   country: string;
   address: string;
   postCode: string;
-  businesscategory: string;
+  businessategory: string;
   isRegisteredGst: string;
   stateId: string;
   city: string;
